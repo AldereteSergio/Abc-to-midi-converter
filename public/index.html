@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC to MIDI Converter - Jaime Altozano</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <i class="fas fa-music"></i>
+                    ABC to MIDI Converter
+                </h1>
+                <p class="subtitle">Convierte notación ABC en archivos MIDI con elegancia</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-edit"></i>
+                        Notación ABC
+                    </h2>
+                    
+                    <!-- File Upload -->
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Arrastra un archivo .abc aquí o haz clic para seleccionar</p>
+                        <input type="file" id="fileInput" accept=".abc,.txt" hidden>
+                    </div>
+
+                    <!-- ABC Editor -->
+                    <div class="editor-container">
+                        <textarea 
+                            id="abcEditor" 
+                            placeholder="Pega tu notación ABC aquí...
+Ejemplo:
+X:1
+T:Mi Melodía
+M:4/4
+K:C
+CDEF | GABc | cBAG | FEDC |]"
+                        ></textarea>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="options">
+                        <div class="option-group">
+                            <label for="instrument">Instrumento:</label>
+                            <select id="instrument">
+                                <option value="piano">Piano</option>
+                                <option value="violin">Violín</option>
+                                <option value="flute">Flauta</option>
+                                <option value="guitar">Guitarra</option>
+                                <option value="bass">Bajo</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label>
+                                <input type="checkbox" id="optimize">
+                                Optimizar MIDI
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Convert Button -->
+                    <button id="convertBtn" class="convert-btn">
+                        <i class="fas fa-magic"></i>
+                        Convertir a MIDI
+                    </button>
+                </div>
+            </section>
+
+            <!-- Output Section -->
+            <section class="output-section" id="outputSection" style="display: none;">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-download"></i>
+                        Resultado
+                    </h2>
+                    
+                    <!-- Metadata -->
+                    <div class="metadata" id="metadata">
+                        <div class="metadata-item">
+                            <span class="label">Título:</span>
+                            <span class="value" id="title">-</span>
+                        </div>
+                        <div class="metadata-item">
+                            <span class="label">Clave:</span>
+                            <span class="value" id="key">-</span>
+                        </div>
+                        <div class="metadata-item">
+                            <span class="label">Tempo:</span>
+                            <span class="value" id="tempo">-</span>
+                        </div>
+                        <div class="metadata-item">
+                            <span class="label">Notas:</span>
+                            <span class="value" id="noteCount">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Download Section -->
+                    <div class="download-section">
+                        <button id="downloadBtn" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Descargar MIDI
+                        </button>
+                        
+                        <div class="filename-input">
+                            <label for="filename">Nombre del archivo:</label>
+                            <input type="text" id="filename" value="music.mid">
+                        </div>
+                    </div>
+
+                    <!-- Preview -->
+                    <div class="preview-section">
+                        <h3>Vista previa musical</h3>
+                        <div id="musicPreview" class="music-preview">
+                            <!-- Aquí se mostrará la visualización musical -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Examples Section -->
+            <section class="examples-section">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Ejemplos
+                    </h2>
+                    
+                    <div class="examples-grid">
+                        <div class="example-item" data-example="scale">
+                            <h4>Escala Mayor</h4>
+                            <p>Una escala simple en Do mayor</p>
+                            <button class="load-example-btn">Cargar</button>
+                        </div>
+                        
+                        <div class="example-item" data-example="folk">
+                            <h4>Melodía Folk</h4>
+                            <p>Una melodía tradicional en 6/8</p>
+                            <button class="load-example-btn">Cargar</button>
+                        </div>
+                        
+                        <div class="example-item" data-example="waltz">
+                            <h4>Vals Simple</h4>
+                            <p>Un vals básico en 3/4</p>
+                            <button class="load-example-btn">Cargar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help Section -->
+            <section class="help-section">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-question-circle"></i>
+                        ¿Cómo funciona?
+                    </h2>
+                    
+                    <div class="help-content">
+                        <div class="help-item">
+                            <h4>¿Qué es ABC?</h4>
+                            <p>ABC es una notación musical textual que permite escribir música usando letras y símbolos simples. Es como el "código fuente" de la música.</p>
+                        </div>
+                        
+                        <div class="help-item">
+                            <h4>Sintaxis básica</h4>
+                            <ul>
+                                <li><strong>X:</strong> Número de referencia</li>
+                                <li><strong>T:</strong> Título</li>
+                                <li><strong>M:</strong> Compás (ej: 4/4, 3/4)</li>
+                                <li><strong>K:</strong> Clave (ej: C, G, F)</li>
+                                <li><strong>Q:</strong> Tempo (ej: 1/4=120)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="help-item">
+                            <h4>Notas</h4>
+                            <p>Las notas se escriben con letras: C, D, E, F, G, A, B. Las minúsculas son una octava más alta. Los accidentes se indican con ^ (sostenido) y _ (bemol).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Convirtiendo a MIDI...</p>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="errorModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Error</h3>
+                <p id="errorMessage"></p>
+                <button class="modal-btn" onclick="closeErrorModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
